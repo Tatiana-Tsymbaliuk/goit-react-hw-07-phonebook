@@ -3,7 +3,11 @@ import { nanoid } from 'nanoid';
 const taskSlice = createSlice({
 name: 'phonebook',
 initialState:{
-        contacts:[],
+        contacts:{
+                items: [],
+                isLoading: false,
+                error: null
+              },
         filter: '',
 },
 reducers:{

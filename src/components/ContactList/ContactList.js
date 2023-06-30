@@ -3,10 +3,11 @@ import React from 'react';
 import './ContactList.css'
 import {useSelector} from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { removeContact } from 'components/redux/taskSlice';
+import { deleteContact } from '../api/api';
 
 const ContactList =()=>{  
-const {contacts, filter} = useSelector(state => state.phonebook);
+  const { contacts } = useSelector(state => state.contacts);
+  const { filter } = useSelector(state => state.filter);
 const dispatch = useDispatch();
 
 const getVisibleContacts=()=>{   
@@ -15,22 +16,25 @@ const getVisibleContacts=()=>{
     contact.name.toLowerCase().includes(normalizedFilter)
   );
   }
+  const handleDelete = itemId => {
+    dispatch(deleteContact(itemId));
+  };
 
 const visibleContacts = getVisibleContacts()
 return (<ul>
-      {visibleContacts ? visibleContacts.map(({id, name, number}) => (
+      {visibleContacts ? visibleContacts.map(({id, name, phone}) => (
         <li key={id} className='listData'>
           {' '} 
-        {name} - {number}
+        {name} - {phone}
          <button className = 'listBtn' 
-        onClick={()=>dispatch(removeContact(id))}>Удалить
+        onClick={()=>dispatch(handleDelete(id))}>Удалить
         </button>
-        </li>)) : contacts.map(({id, name, number}) => (
+        </li>)) : contacts.map(({id, name, phone}) => (
         <li key={id} className='listData'>
           {' '} 
-        {name} - {number}
+        {name} - {phone}
          <button className = 'listBtn' 
-        onClick={()=>dispatch(removeContact(id))}>Удалить
+        onClick={()=>dispatch(handleDelete(id))}>Удалить
         </button>
         </li>
       ))}

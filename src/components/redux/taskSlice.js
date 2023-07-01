@@ -15,12 +15,12 @@ reducers:{
                 reducer(state, action){
                 state.contacts.push(action.payload)
         },
-        prepare(name, number) {
+        prepare(name, phone) {
                 return{
                 payload:{
                 id:nanoid(),        
                 name,
-                number,
+                phone,
         },};},},
 
         removeContact(state, action){

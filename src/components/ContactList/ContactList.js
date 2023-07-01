@@ -11,9 +11,9 @@ const ContactList =()=>{
 const dispatch = useDispatch();
 
 const getVisibleContacts=()=>{   
-  //const normalizedFilter = filter.toLowerCase();
+  const normalizedFilter = filter.toLowerCase();
   return contacts.filter(contact =>
-    contact.name.toLowerCase().includes(filter)
+    contact.name.toLowerCase().includes(normalizedFilter)
   );
   }
   const handleDelete = itemId => {
@@ -27,14 +27,14 @@ return (<ul>
           {' '} 
         {name} - {phone}
          <button className = 'listBtn' 
-        onClick={()=>dispatch(handleDelete(id))}>Удалить
+        onClick={()=>handleDelete(id)} id={id}>Удалить
         </button>
         </li>)) : contacts.map(({id, name, phone}) => (
         <li key={id} className='listData'>
           {' '} 
         {name} - {phone}
          <button className = 'listBtn' 
-        onClick={()=>dispatch(handleDelete(id))}>Удалить
+        onClick={()=>handleDelete(id)} id={id}>Удалить
         </button>
         </li>
       ))}

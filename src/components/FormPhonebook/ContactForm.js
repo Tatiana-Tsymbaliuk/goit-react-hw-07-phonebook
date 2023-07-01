@@ -14,12 +14,16 @@ export default function ContactForm() {
   }; 
   const handelSubmitForm = e => {
     e.preventDefault();
-    if (checkName(e.target.name.value)) {
-      alert(`is already in contacts`);
+    
+    const name = e.currentTarget.name.value;
+    const phone = e.currentTarget.phone.value;
+    if (checkName(name)) {
+      alert(`${name} is already in contacts`);
     } else{
-    dispatch(addContact(e.target.name.value, e.target.phone.value));
+      dispatch(addContact({name, phone})); 
+      e.currentTarget.reset();
     }
-    e.target.reset();
+    
   };
   return (
     <form onSubmit={handelSubmitForm} className="formData">
@@ -29,7 +33,7 @@ export default function ContactForm() {
           className="formDataInput"
           type="text"
           name="name"
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          pattern="^[A-Za-z\u0080-\uFFFF ']+$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
         />
@@ -40,7 +44,7 @@ export default function ContactForm() {
           className="formDataInput"
           type="tel"
           name="phone"
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+          pattern="^(\+?[0-9.\(\)\-\s]*)$"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
         />
